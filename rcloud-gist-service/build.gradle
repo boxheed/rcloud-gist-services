@@ -17,9 +17,11 @@ dependencies {
   compile 'org.springframework.cloud:spring-cloud-starter-sleuth'
   compile 'org.springframework.hateoas:spring-hateoas'
   compile 'commons-io:commons-io'
-  compile 'org.codehaus.groovy:groovy-all'
+  compile 'org.codehaus.groovy:groovy-all:2.5.9'
   compile 'com.hazelcast:hazelcast'
   compile 'com.hazelcast:hazelcast-spring'
+
+  compile 'com.sun.activation:javax.activation:1.2.0'
 
   compile 'joda-time:joda-time'
   compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda'

@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.helpers.MessageFormatter;
@@ -382,6 +383,7 @@ public class GistRestControllerTest {
 
     @Test
     @WithMockUser("mock_user")
+//    @Ignore
     public void testGistCacheRefresh() throws Exception {
 
         // get the gist and check the collaborators

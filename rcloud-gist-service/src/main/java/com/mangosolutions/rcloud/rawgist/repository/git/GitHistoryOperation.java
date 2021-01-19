@@ -19,7 +19,8 @@ import org.ajoberstar.grgit.Person;
 import org.ajoberstar.grgit.Repository;
 import org.ajoberstar.grgit.operation.LogOp;
 import org.ajoberstar.grgit.operation.ShowOp;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -54,7 +55,7 @@ import com.mangosolutions.rcloud.rawgist.model.GitChangeStatus;
  */
 public class GitHistoryOperation implements Callable<List<GistHistory>> {
 
-	private static final Logger logger = Logger.getLogger(GitHistoryOperation.class);
+	private static final Logger logger = LoggerFactory.getLogger(GitHistoryOperation.class);
 
 	private Repository repository;
 

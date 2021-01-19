@@ -13,7 +13,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.ManagementServerProperties;
+import org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,7 @@ import org.springframework.util.ReflectionUtils;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(ManagementServerProperties.ACCESS_OVERRIDE_ORDER)
+@Order(99)
 public class ManagementSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -41,7 +41,7 @@ public class ManagementSecurityConfiguration extends WebSecurityConfigurerAdapte
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		.antMatcher("/" + managementProperties.getContextPath() + "/**")
+		.antMatcher("/" + managementProperties.getServlet().getContextPath() + "/**")
 		.csrf()
 		.disable()
 		.authorizeRequests()
@@ -70,10 +70,7 @@ public class ManagementSecurityConfiguration extends WebSecurityConfigurerAdapte
 		@Override
 		public void configure(AuthenticationManagerBuilder auth) throws Exception {
 			User user = this.securityProperties.getUser();
-			if (user.isDefaultPassword()) {
-				logger.info("\n\nUsing default security password: " + user.getPassword() + "\n");
-			}
-			Set<String> roles = new LinkedHashSet<String>(user.getRole());
+			Set<String> roles = new LinkedHashSet<String>(user.getRoles());
 			withUser(user.getName()).password(user.getPassword()).roles(roles.toArray(new String[roles.size()]));
 			setField(auth, "defaultUserDetailsService", getUserDetailsService());
 			super.configure(auth);

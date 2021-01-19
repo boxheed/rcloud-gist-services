@@ -14,13 +14,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.ManagementServerProperties;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -51,7 +49,6 @@ import com.mangosolutions.rcloud.sessionkeyauth.UserAuthorityResolver;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 @EnableConfigurationProperties(SessionKeyServerProperties.class)
 public class SessionKeyServerSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -73,7 +70,7 @@ public class SessionKeyServerSecurityConfiguration extends WebSecurityConfigurer
 
         http.requestMatchers()
                 .requestMatchers(new NegatedRequestMatcher(
-                        new AntPathRequestMatcher("/" + managementProperties.getContextPath() + "/**")))
+                        new AntPathRequestMatcher("/" + managementProperties.getServlet().getContextPath() + "/**")))
                 .and().addFilterBefore(ssoFilter(), RequestHeaderAuthenticationFilter.class)
                 .authenticationProvider(preAuthAuthProvider()).csrf().disable().authorizeRequests().anyRequest()
                 .authenticated();

@@ -21,7 +21,15 @@ public class KeyServerConfiguration {
 	private String realm = DEFAULT_REALM_VALUE;
 	private String url = DEFAULT_URL_VALUE;
 	private boolean active = true;
+	private boolean mocked = false;
 
+        public boolean getMocked() {
+            return mocked;
+        }
+
+        public void setMocked(boolean mocked) {
+            this.mocked = mocked;
+        }
 
 	public String getHost() {
 		return host;

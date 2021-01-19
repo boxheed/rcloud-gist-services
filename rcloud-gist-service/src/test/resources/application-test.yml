@@ -11,6 +11,7 @@ management:
   port: 17021
   security:
     enabled: true
+    
 
 info:
   version: 0.1.0

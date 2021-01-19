@@ -49,8 +49,17 @@ public class SessionKeyServerService {
     public SessionKeyServerResponse authenticate(String clientId, String sessionKey) {
         KeyServerConfiguration keyServer = getKeyServerConfiguration(clientId);
         logger.debug("Using key server for token authentication {}", keyServer);
-        ResponseEntity<SessionKeyServerResponse> response = doAuthentication(sessionKey, keyServer);
-        return response.getBody();
+        SessionKeyServerResponse response = null;
+        if(keyServer.getMocked()) {
+            response = new SessionKeyServerResponse();
+            response.setName("mockey_mcmockface");
+            response.setResult(SessionKeyServerResult.YES);
+            response.setSource("");
+        } else {
+            ResponseEntity<SessionKeyServerResponse> entity = doAuthentication(sessionKey, keyServer);
+            response = entity.getBody();
+        }
+        return response;
     }
     
     private KeyServerConfiguration getKeyServerConfiguration(String clientId) {
