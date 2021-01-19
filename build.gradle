@@ -124,7 +124,7 @@ configure(subprojects.findAll {it.name =~ /.*service/}) {
   }
 
   dependencies {
-    compile("org.springframework.boot:spring-boot-starter-undertow:1.4.3.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-undertow:2.2.5.RELEASE")
   }
 
   processResources {
